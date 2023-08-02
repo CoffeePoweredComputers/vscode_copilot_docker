@@ -1,17 +1,15 @@
-FROM codercom/code-server
+FROM codercom/code-server:latest
 
-RUN mkdir -p /home/coder/custom-extensions && chown coder:coder /home/coder/custom-extensions
+COPY extensions/copilot.vsix /copilot.vsix
+#COPY extensions/ms-python.vsix /ms-python.vsix
 
-ENV CODE_EXTENSIONS_DIR=/home/coder/custom-extensions
+USER coder
 
-# Copy the extension files to the custom extensions folder
-COPY extensions/*.vsix /home/coder/custom-extensions/
+RUN mkdir -p /home/coder/workspace
+WORKDIR /home/coder/workspace
 
-# Install extensions from the custom extensions folder
-RUN for extension in $(ls /home/coder/custom-extensions/*.vsix); do \
-      code-server --extensions-dir "$CODE_EXTENSIONS_DIR" --install-extension "$extension"; \
-    done
+EXPOSE 8080
 
-# Start Code Server with the custom extensions folder
-ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080", "--extensions-dir", "/home/coder/custom-extensions", "."]
+COPY entrypoint.sh /entrypoint.sh
 
+ENTRYPOINT [ "/entrypoint.sh" ]
