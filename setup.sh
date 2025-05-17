@@ -2,6 +2,7 @@
 
 # install the extensions
 code-server --install-extension /copilot.vsix
+code-server --install-extension /copilot-chat.vsix
 
 # Setup coder directories.
 mkdir -p /home/coder/.local/share/code-server/User
@@ -18,3 +19,4 @@ chown -R coder:coder /home/coder
 
 # Cleanup.
 rm -f /copilot.vsix
+rm -f /copilot-chat.vsix

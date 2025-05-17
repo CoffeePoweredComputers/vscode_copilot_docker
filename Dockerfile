@@ -1,7 +1,8 @@
-FROM codercom/code-server:4.11.0
+FROM codercom/code-server:4.100.2-39
 
 USER root
 COPY extensions/copilot.vsix /copilot.vsix
+COPY extensions/copilot-chat.vsix /copilot-chat.vsix
 
 COPY setup.sh /setup.sh
 RUN /bin/bash /setup.sh
